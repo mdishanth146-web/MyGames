@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050b16">
+  <meta name="description" content="My Games — personal portfolio, projects and games.">
+  <title>My Games | Personal Website</title>
+  <style>
+    :root {
+      --bg: #050b16;
+      --panel: #0b1628;
+      --panel-2: #0e1d33;
+      --text: #edf6ff;
+      --muted: #9bb0c8;
+      --blue: #20c7ff;
+      --blue-2: #087bff;
+      --line: rgba(75, 183, 255, .2);
+      --glow: 0 0 28px rgba(32, 199, 255, .18);
+      --radius: 20px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body {
+      background:
+        radial-gradient(ellipse at 80% 0%, rgba(0, 123, 255, .15), transparent 35%),
+        radial-gradient(ellipse at 0% 45%, rgba(32, 199, 255, .08), transparent 30%),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    .container { width: min(1120px, calc(100% - 40px)); margin: auto; }
+    .navbar {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(5, 11, 22, .82); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { font-size: 1.12rem; font-weight: 900; letter-spacing: .04em; }
+    .brand span { color: var(--blue); text-shadow: 0 0 18px rgba(32,199,255,.7); }
+    .nav-links { display: flex; align-items: center; gap: 26px; color: var(--muted); font-size: .94rem; }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--blue); }
+    .menu-btn {
+      display: none; color: var(--text); background: var(--panel); border: 1px solid var(--line);
+      border-radius: 12px; padding: 8px 12px; cursor: pointer;
+    }
+    .hero { min-height: 620px; display: grid; place-items: center; padding: 92px 0 80px; text-align: center; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px; padding: 7px 13px;
+      border: 1px solid var(--line); border-radius: 999px; color: var(--blue);
+      background: rgba(32,199,255,.06); font-size: .82rem; letter-spacing: .08em; text-transform: uppercase;
+    }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 12px var(--blue); }
+    h1 { margin: 24px 0 16px; font-size: clamp(2.7rem, 8vw, 5.7rem); line-height: 1.02; letter-spacing: -.055em; }
+    h1 .accent { color: var(--blue); text-shadow: 0 0 34px rgba(32,199,255,.32); }
+    .hero p { max-width: 650px; margin: 0 auto; color: var(--muted); font-size: clamp(1rem, 2.3vw, 1.18rem); }
+    .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 13px; margin-top: 30px; }
+    .btn {
+      display: inline-flex; justify-content: center; align-items: center; gap: 8px;
+      border-radius: 12px; padding: 12px 19px; font-weight: 750; border: 1px solid var(--line);
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: var(--glow); }
+    .btn-primary { background: linear-gradient(110deg, var(--blue-2), #08bde8); color: #00101d; border: 0; }
+    .btn-secondary { background: rgba(255,255,255,.03); color: var(--text); }
+    .scroll-note { margin-top: 58px; color: #66819d; font-size: .82rem; }
+    section { padding: 82px 0; }
+    .section-head { margin-bottom: 30px; }
+    .kicker { color: var(--blue); text-transform: uppercase; letter-spacing: .16em; font-size: .75rem; font-weight: 800; }
+    h2 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -.04em; margin-top: 7px; }
+    .section-intro { color: var(--muted); max-width: 650px; margin-top: 8px; }
+    .about-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 22px; }
+    .panel {
+      background: linear-gradient(145deg, rgba(14,29,51,.92), rgba(8,19,35,.92));
+      border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; box-shadow: var(--glow);
+    }
+    .panel p { color: var(--muted); }
+    .panel p + p { margin-top: 14px; }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .stat { background: rgba(32,199,255,.045); border: 1px solid var(--line); padding: 18px; border-radius: 15px; }
+    .stat strong { display: block; color: var(--blue); font-size: 1.4rem; }
+    .stat span { color: var(--muted); font-size: .84rem; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .project-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 18px;
+      padding: 23px; display: flex; flex-direction: column; min-height: 230px;
+      transition: transform .2s, border-color .2s;
+    }
+    .project-card:hover { transform: translateY(-5px); border-color: rgba(32,199,255,.65); }
+    .project-icon {
+      width: 48px; height: 48px; display: grid; place-items: center; border-radius: 14px;
+      color: var(--blue); background: rgba(32,199,255,.09); border: 1px solid var(--line); font-size: 1.35rem;
+    }
+    .project-card h3 { margin: 17px 0 7px; font-size: 1.15rem; }
+    .project-card p { color: var(--muted); font-size: .93rem; flex: 1; }
+    .card-link { color: var(--blue); font-weight: 750; font-size: .9rem; margin-top: 18px; display: inline-block; }
+    .game-banner {
+      display: flex; align-items: center; justify-content: space-between; gap: 22px;
+      padding: 30px; border-radius: var(--radius); border: 1px solid var(--line);
+      background: linear-gradient(115deg, rgba(8,123,255,.16), rgba(32,199,255,.04));
+    }
+    .game-banner p { color: var(--muted); margin-top: 7px; }
+    .contact-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 22px; }
+    .contact-list { display: grid; gap: 14px; margin-top: 22px; }
+    .contact-item { color: var(--muted); overflow-wrap: anywhere; }
+    .contact-item strong { color: var(--text); display: block; font-size: .9rem; }
+    form { display: grid; gap: 13px; }
+    label { font-size: .88rem; color: var(--muted); }
+    input, textarea {
+      width: 100%; margin-top: 6px; padding: 12px 14px; color: var(--text);
+      background: #061020; border: 1px solid var(--line); border-radius: 11px; outline: none;
+    }
+    input:focus, textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(32,199,255,.1); }
+    textarea { resize: vertical; min-height: 125px; }
+    .form-note { color: #7891aa; font-size: .78rem; }
+    footer { border-top: 1px solid var(--line); padding: 25px 0; color: #7891aa; font-size: .86rem; text-align: center; }
+    :focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
+    @media (max-width: 760px) {
+      .menu-btn { display: block; }
+      .nav-links {
+        display: none; position: absolute; top: 72px; left: 0; right: 0; padding: 18px 22px 22px;
+        background: #071222; border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch; gap: 15px;
+      }
+      .nav-links.open { display: flex; }
+      .hero { min-height: 560px; padding: 76px 0 60px; }
+      section { padding: 65px 0; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: 1fr; }
+      .game-banner { align-items: flex-start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="#home">MY<span>GAMES</span>.</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false">☰</button>
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#games">My Games</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container" id="home">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Welcome to my world</div>
+        <h1>Hey, I'm a<br><span class="accent">Creator & Gamer.</span></h1>
+        <p>Welcome to my personal space on the internet. I build projects, experiment with code, and create games. Explore what I'm working on!</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#projects">Explore Projects <span aria-hidden="true">↗</span></a>
+          <a class="btn btn-secondary" href="#contact">Contact Me</a>
+        </div>
+        <div class="scroll-note">SCROLL TO EXPLORE ↓</div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">01 / About</div>
+          <h2>A little about me.</h2>
+          <p class="section-intro">A curious creator who enjoys learning, building, and turning ideas into real projects.</p>
+        </div>
+        <div class="about-grid">
+          <div class="panel">
+            <p>Hi! Thanks for visiting <strong>My Games</strong>. I'm interested in technology, web development, and game creation.</p>
+            <p>This website is where I'll share the projects I'm building, the games I'm experimenting with, and things I learn along the way.</p>
+            <p><strong style="color:var(--blue)">My goal:</strong> Keep learning, keep creating, and make something awesome.</p>
+          </div>
+          <div class="panel stat-grid">
+            <div class="stat"><strong>01</strong><span>Keep learning</span></div>
+            <div class="stat"><strong>02</strong><span>Build projects</span></div>
+            <div class="stat"><strong>03</strong><span>Create games</span></div>
+            <div class="stat"><strong>∞</strong><span>New ideas</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">02 / Projects</div>
+          <h2>Things I've built.</h2>
+          <p class="section-intro">A few project cards to get started. Replace the sample descriptions and links with your real projects.</p>
+        </div>
+        <div class="cards">
+          <article class="project-card">
+            <div class="project-icon" aria-hidden="true">⌨</div>
+            <h3>Web Projects</h3>
+            <p>Small websites and experiments made with HTML, CSS, and JavaScript.</p>
+            <a class="card-link" href="#contact">Ask me about it →</a>
+          </article>
+          <article class="project-card">
+            <div class="project-icon" aria-hidden="true">🎮</div>
+            <h3>Game Development</h3>
+            <p>Browser games, gameplay ideas, and interactive experiments.</p>
+            <a class="card-link" href="#games">Explore my games →</a>
+          </article>
+          <article class="project-card">
+            <div class="project-icon" aria-hidden="true">💡</div>
+            <h3>New Experiments</h3>
+            <p>A place for prototypes, creative ideas, and things I'm learning.</p>
+            <a class="card-link" href="#contact">Get in touch →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="games">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">03 / My Games</div>
+          <h2>Ready to play?</h2>
+          <p class="section-intro">This section is your game showcase. Add a link to each game when you publish it online.</p>
+        </div>
+        <div class="game-banner">
+          <div>
+            <h3>My Game Collection</h3>
+            <p>Your games will appear here. Replace the button link with your published game URL.</p>
+          </div>
+          <a class="btn btn-primary" href="#contact">Game links coming soon</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">04 / Contact</div>
+          <h2>Let's connect.</h2>
+          <p class="section-intro">Have a question or want to talk about a project? Send me a message.</p>
+        </div>
+        <div class="contact-grid">
+          <div class="panel">
+            <h3>Contact details</h3>
+            <p style="margin-top:8px">Update these sample details with a public contact method you want visitors to use.</p>
+            <div class="contact-list">
+              <div class="contact-item"><strong>Email</strong>your-email@example.com</div>
+              <div class="contact-item"><strong>Instagram</strong>@yourusername</div>
+              <div class="contact-item"><strong>GitHub</strong>github.com/yourusername</div>
+            </div>
+          </div>
+          <div class="panel">
+            <form id="contactForm">
+              <label>Your name<input id="visitorName" name="name" type="text" placeholder="Enter your name" required></label>
+              <label>Your email<input id="visitorEmail" name="email" type="email" placeholder="Enter your email" required></label>
+              <label>Message<textarea id="visitorMessage" name="message" placeholder="Write your message..." required></textarea></label>
+              <button class="btn btn-primary" type="submit">Prepare Email ↗</button>
+              <p class="form-note">This opens your email app. It does not store or send messages by itself.</p>
+              <p id="formStatus" class="form-note" role="status"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year"></span> My Games. Built with HTML, CSS & JavaScript.</div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+
+    menuBtn.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(isOpen));
+      menuBtn.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+      menuBtn.textContent = isOpen ? '✕' : '☰';
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.setAttribute('aria-label', 'Open navigation menu');
+        menuBtn.textContent = '☰';
+      });
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    document.getElementById('contactForm').addEventListener('submit', event => {
+      event.preventDefault();
+      const name = document.getElementById('visitorName').value.trim();
+      const email = document.getElementById('visitorEmail').value.trim();
+      const message = document.getElementById('visitorMessage').value.trim();
+      const destination = 'your-email@example.com'; // Replace with your email address.
+      const subject = encodeURIComponent('Website message from ' + name);
+      const body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
+      document.getElementById('formStatus').textContent =
+        'Opening your email app. If nothing opens, check that an email app is configured.';
+      window.location.href = `mailto:${destination}?subject=${subject}&body=${body}`;
+    });
+  </script>
+</body>
+</html>
